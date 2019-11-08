@@ -1,0 +1,33 @@
+{
+  "name": "react-hoook",
+  "version": "0.1.0",
+  "private": true,
+  "author": "@baby张 <babybrotherzb@gmail.com>",
+  "address": "https://github.com/babybrotherzb",
+  "csdn": "https://blog.csdn.net/weixin_43648947",
+  "dependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "dev": "npm run start"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
