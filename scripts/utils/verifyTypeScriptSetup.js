@@ -1,11 +1,3 @@
-// @remove-file-on-eject
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 "use strict";
 
 const chalk = require("react-dev-utils/chalk");
@@ -27,7 +19,9 @@ function writeJson(fileName, object) {
 function verifyNoTypeScript() {
   const typescriptFiles = globby(
     ["**/*.(ts|tsx)", "!**/node_modules", "!**/*.d.ts"],
-    { cwd: paths.appSrc }
+    {
+      cwd: paths.appSrc
+    }
   );
   if (typescriptFiles.length > 0) {
     console.warn(
@@ -56,7 +50,7 @@ function verifyTypeScriptSetup() {
 
   const isYarn = fs.existsSync(paths.yarnLockFile);
 
-  // Ensure typescript is installed
+  // 确保安装了typescript
   let ts;
   try {
     ts = require(resolve.sync("typescript", {
@@ -92,25 +86,38 @@ function verifyTypeScriptSetup() {
   }
 
   const compilerOptions = {
-    // These are suggested values and will be set when not present in the
+    // 这些是建议的值，将在不存在时设置
     // tsconfig.json
-    // 'parsedValue' matches the output value from ts.parseJsonConfigFileContent()
+    // 'parsedValue'匹配ts.parseJsonConfigFileContent()的输出值
     target: {
       parsedValue: ts.ScriptTarget.ES5,
       suggested: "es5"
     },
-    lib: { suggested: ["dom", "dom.iterable", "esnext"] },
-    allowJs: { suggested: true },
-    skipLibCheck: { suggested: true },
-    esModuleInterop: { suggested: true },
-    allowSyntheticDefaultImports: { suggested: true },
-    strict: { suggested: true },
-    forceConsistentCasingInFileNames: { suggested: true },
-    // TODO: Enable for v4.0 (#6936)
-    // noFallthroughCasesInSwitch: { suggested: true },
-
-    // These values are required and cannot be changed by the user
-    // Keep this in sync with the webpack config
+    lib: {
+      suggested: ["dom", "dom.iterable", "esnext"]
+    },
+    allowJs: {
+      suggested: true
+    },
+    skipLibCheck: {
+      suggested: true
+    },
+    esModuleInterop: {
+      suggested: true
+    },
+    allowSyntheticDefaultImports: {
+      suggested: true
+    },
+    strict: {
+      suggested: true
+    },
+    forceConsistentCasingInFileNames: {
+      suggested: true
+    },
+    // TODO:启用v4.0 (#6936)
+    // noFallthroughCasesInSwitch: {suggest: true}，
+    //这些值是必需的，用户不能更改
+    //保持与webpack配置同步
     module: {
       parsedValue: ts.ModuleKind.ESNext,
       value: "esnext",
@@ -121,14 +128,25 @@ function verifyTypeScriptSetup() {
       value: "node",
       reason: "to match webpack resolution"
     },
-    resolveJsonModule: { value: true, reason: "to match webpack loader" },
-    isolatedModules: { value: true, reason: "implementation limitation" },
-    noEmit: { value: true },
+    resolveJsonModule: {
+      value: true,
+      reason: "to match webpack loader"
+    },
+    isolatedModules: {
+      value: true,
+      reason: "implementation limitation"
+    },
+    noEmit: {
+      value: true
+    },
     jsx: {
       parsedValue: ts.JsxEmit.React,
       suggested: "react"
     },
-    paths: { value: undefined, reason: "aliased imports are not supported" }
+    paths: {
+      value: undefined,
+      reason: "aliased imports are not supported"
+    }
   };
 
   const formatDiagnosticHost = {
@@ -153,9 +171,9 @@ function verifyTypeScriptSetup() {
 
     appTsConfig = readTsConfig;
 
-    // Get TS to parse and resolve any "extends"
-    // Calling this function also mutates the tsconfig above,
-    // adding in "include" and "exclude", but the compilerOptions remain untouched
+    // 让TS解析和解析任何“扩展”
+    //调用这个函数也会改变上面的tsconfig，
+    //添加“包括”和“排除”，但编译器选项保持不变
     let result;
     parsedTsConfig = immer(readTsConfig, config => {
       result = ts.parseJsonConfigFileContent(
@@ -218,7 +236,7 @@ function verifyTypeScriptSetup() {
     }
   }
 
-  // tsconfig will have the merged "include" and "exclude" by this point
+  //tsconfig此时将合并“包含”和“排除”
   if (parsedTsConfig.include == null) {
     appTsConfig.include = ["src"];
     messages.push(
@@ -252,7 +270,7 @@ function verifyTypeScriptSetup() {
     writeJson(paths.appTsConfig, appTsConfig);
   }
 
-  // Reference `react-scripts` types
+  // 参考“react-scripts”类型
   if (!fs.existsSync(paths.appTypeDeclarations)) {
     fs.writeFileSync(
       paths.appTypeDeclarations,

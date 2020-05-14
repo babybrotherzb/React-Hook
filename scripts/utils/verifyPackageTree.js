@@ -1,11 +1,3 @@
-// @remove-file-on-eject
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 "use strict";
 
 const chalk = require("react-dev-utils/chalk");
@@ -13,14 +5,14 @@ const fs = require("fs");
 const semver = require("semver");
 const path = require("path");
 
-// We assume that having wrong versions of these
-// in the tree will likely break your setup.
-// This is a relatively low-effort way to find common issues.
+// 我们假设有错误的版本
+//在树中将可能破坏您的设置。
+//这是一种比较容易找到共同问题的方法。
 function verifyPackageTree() {
   const depsToCheck = [
-    // These are packages most likely to break in practice.
-    // See https://github.com/facebook/create-react-app/issues/1795 for reasons why.
-    // I have not included Babel here because plugins typically don't import Babel (so it's not affected).
+    //这些是最有可能在实践中被破坏的包。
+    //参见https://github.com/facebook/crereact-app/issues/1795。
+    //我没有在这里包括Babel，因为插件通常不导入Babel(所以它不受影响)。
     "babel-eslint",
     "babel-jest",
     "babel-loader",
@@ -29,8 +21,8 @@ function verifyPackageTree() {
     "webpack",
     "webpack-dev-server"
   ];
-  // Inlined from semver-regex, MIT license.
-  // Don't want to make this a dependency after ejecting.
+  //内联来自semver-regex, MIT许可。
+  //不想在弹出后使其成为依赖项。
   const getSemverRegex = () =>
     /\bv?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/gi;
   const ownPackageJson = require("../../package.json");
@@ -48,14 +40,14 @@ function verifyPackageTree() {
     }
     expectedVersionsByDep[dep] = expectedVersion;
   });
-  // Verify we don't have other versions up the tree
+  // 验证我们没有其他版本
   let currentDir = __dirname;
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const previousDir = currentDir;
     currentDir = path.resolve(currentDir, "..");
     if (currentDir === previousDir) {
-      // We've reached the root.
+      // 我们已经到达了根结点。
       break;
     }
     const maybeNodeModules = path.resolve(currentDir, "node_modules");
