@@ -3,7 +3,7 @@
 const path = require("path");
 const camelcase = require("camelcase");
 
-// This is a custom Jest transformer turning file imports into filenames.
+// 这是一个自定义Jest转换器，将文件导入转换为文件名。
 // http://facebook.github.io/jest/docs/en/webpack.html
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
     const assetFilename = JSON.stringify(path.basename(filename));
 
     if (filename.match(/\.svg$/)) {
-      // Based on how SVGR generates a component name:
+      // 基于SVGR如何生成组件名称:
       // https://github.com/smooth-code/svgr/blob/01b194cf967347d43d4cbe6b434404731b87cf27/packages/core/src/state.js#L6
       const pascalCaseFilename = camelcase(path.parse(filename).name, {
         pascalCase: true

@@ -1,18 +1,10 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-// @remove-on-eject-end
 "use strict";
 
 const fs = require("fs");
 const path = require("path");
 const paths = require("./paths");
 
-// Make sure that including paths.js after env.js will read .env variables.
+// 确保在env.js之后包含path .js将读取.env变量。
 delete require.cache[require.resolve("./paths")];
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -26,16 +18,16 @@ if (!NODE_ENV) {
 const dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,
   `${paths.dotenv}.${NODE_ENV}`,
-  // Don't include `.env.local` for `test` environment
-  // since normally you expect tests to produce the same
-  // results for everyone
+  //不包括“.env。本地'为'测试'环境
+  //因为通常情况下，您期望测试产生相同的结果
+  //每个人的结果
   NODE_ENV !== "test" && `${paths.dotenv}.local`,
   paths.dotenv
 ].filter(Boolean);
 
-// Load environment variables from .env* files. Suppress warnings using silent
-// if this file is missing. dotenv will never modify any environment variables
-// that have already been set.  Variable expansion is supported in .env files.
+//从.env*文件中加载环境变量。使用静默抑制警告
+//如果这个文件丢失了。dotenv永远不会修改任何环境变量
+//在.env文件中支持变量扩展。
 // https://github.com/motdotla/dotenv
 // https://github.com/motdotla/dotenv-expand
 dotenvFiles.forEach(dotenvFile => {
@@ -48,15 +40,15 @@ dotenvFiles.forEach(dotenvFile => {
   }
 });
 
-// We support resolving modules according to `NODE_PATH`.
-// This lets you use absolute paths in imports inside large monorepos:
-// https://github.com/facebook/create-react-app/issues/253.
-// It works similar to `NODE_PATH` in Node itself:
-// https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
-// Note that unlike in Node, only *relative* paths from `NODE_PATH` are honored.
-// Otherwise, we risk importing Node.js core modules into an app instead of Webpack shims.
-// https://github.com/facebook/create-react-app/issues/1023#issuecomment-265344421
-// We also resolve them to make sure all tools using them work consistently.
+// 我们支持根据“NODE_PATH”解析模块。
+//这让你在导入时使用绝对路径在大型的monorepos:
+// https://github.com/facebook/create-react-app/issues/253。
+//它的工作原理类似于节点本身的“NODE_PATH”:
+// https://nodejs.org/api/modules.html modules_loading_from_the_global_folders
+//注意，与Node中不同的是，这里只支持“NODE_PATH”中的“相对”路径。
+//否则，我们将冒着将Node.js核心模块导入应用程序而不是Webpack垫片的风险。
+// https://github.com/facebook/create-react-app/issues/1023 # issuecomment - 265344421
+//我们还会解决这些问题，以确保所有使用它们的工具都能一致地工作。
 const appDirectory = fs.realpathSync(process.cwd());
 process.env.NODE_PATH = (process.env.NODE_PATH || "")
   .split(path.delimiter)
@@ -64,8 +56,8 @@ process.env.NODE_PATH = (process.env.NODE_PATH || "")
   .map(folder => path.resolve(appDirectory, folder))
   .join(path.delimiter);
 
-// Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
-// injected into the application via DefinePlugin in Webpack configuration.
+// 获取NODE_ENV和REACT_APP_*环境变量，并将它们准备好
+//通过Webpack配置中的DefinePlugin注入到应用程序中。
 const REACT_APP = /^REACT_APP_/i;
 
 function getClientEnvironment(publicUrl) {
@@ -77,17 +69,17 @@ function getClientEnvironment(publicUrl) {
         return env;
       },
       {
-        // Useful for determining whether we’re running in production mode.
-        // Most importantly, it switches React into the correct mode.
+        // 用于确定我们是否在生产模式下运行。
+        //最重要的是，它把反应切换到正确的模式。
         NODE_ENV: process.env.NODE_ENV || "development",
-        // Useful for resolving the correct path to static assets in `public`.
-        // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
-        // This should only be used as an escape hatch. Normally you would put
-        // images into the `src` and `import` them in code to get their paths.
+        // 用于解析到“public”中的静态资产的正确路径。
+        //例如，<img src={process.env。PUBLIC_URL + ' / img /标志。png '} / >。
+        //这只能用作逃生出口。通常你会把
+        //图像到“src”中，然后在代码中“导入”它们，以获得它们的路径。
         PUBLIC_URL: publicUrl
       }
     );
-  // Stringify all values so we can feed into Webpack DefinePlugin
+  // Stringify所有值，这样我们就可以输入Webpack DefinePlugin
   const stringified = {
     "process.env": Object.keys(raw).reduce((env, key) => {
       env[key] = JSON.stringify(raw[key]);
@@ -95,7 +87,10 @@ function getClientEnvironment(publicUrl) {
     }, {})
   };
 
-  return { raw, stringified };
+  return {
+    raw,
+    stringified
+  };
 }
 
 module.exports = getClientEnvironment;
