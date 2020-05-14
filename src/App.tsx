@@ -7,10 +7,13 @@ import {
   UseContext,
   UseReducer,
   UseMemo,
-  UseRef
+  UseRef,
+  WaterMark
 } from "./components";
 
 const App = () => {
+  WaterMark({ content: "baby张" });
+
   return (
     <BrowserRouter>
       {/**此处无关紧要 */}
