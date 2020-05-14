@@ -1,10 +1,3 @@
-// @remove-file-on-eject
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 "use strict";
 
 const fs = require("fs");
@@ -13,8 +6,8 @@ const paths = require("../../config/paths");
 const modules = require("../../config/modules");
 
 module.exports = (resolve, rootDir, isEjecting) => {
-  // Use this instead of `paths.testsSetup` to avoid putting
-  // an absolute filename into configuration after ejecting.
+  //使用这个而不是“路径”。testsSetup '以避免放置
+  //在弹出后，绝对文件名进入配置。
   const setupTestsMatches = paths.testsSetup.match(/src[/\\]setupTests\.(.+)/);
   const setupTestsFileExtension =
     (setupTestsMatches && setupTestsMatches[1]) || "js";
@@ -90,10 +83,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
     supportedKeys.forEach(key => {
       if (Object.prototype.hasOwnProperty.call(overrides, key)) {
         if (Array.isArray(config[key]) || typeof config[key] !== "object") {
-          // for arrays or primitive types, directly override the config key
+          // 对于数组或基本类型，直接重写配置键
           config[key] = overrides[key];
         } else {
-          // for object types, extend gracefully
+          // 对于对象类型，可以优雅地扩展
           config[key] = Object.assign({}, config[key], overrides[key]);
         }
 
