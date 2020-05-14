@@ -1,11 +1,3 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-// @remove-on-eject-end
 "use strict";
 
 const errorOverlayMiddleware = require("react-dev-utils/errorOverlayMiddleware");
@@ -20,71 +12,71 @@ const host = process.env.HOST || "0.0.0.0";
 
 module.exports = function(proxy, allowedHost) {
   return {
-    // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
-    // websites from potentially accessing local content through DNS rebinding:
+    //WebpackDevServer 2.4.3引入了一个防止远程访问的安全补丁
+    //网站可能通过DNS重绑定访问本地内容:
     // https://github.com/webpack/webpack-dev-server/issues/887
-    // https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a
-    // However, it made several existing use cases such as development in cloud
-    // environment or subdomains in development significantly more complicated:
+    // https://medium.com/webpack/webpack - dev -服务器- - 1489 d950874a中间件——安全问题
+    //然而，它提出了几个现有的用例，例如云中的开发
+    //开发中的环境或子域明显更复杂:
     // https://github.com/facebook/create-react-app/issues/2271
     // https://github.com/facebook/create-react-app/issues/2233
-    // While we're investigating better solutions, for now we will take a
-    // compromise. Since our WDS configuration only serves files in the `public`
-    // folder we won't consider accessing them a vulnerability. However, if you
-    // use the `proxy` feature, it gets more dangerous because it can expose
-    // remote code execution vulnerabilities in backends like Django and Rails.
-    // So we will disable the host check normally, but enable it if you have
-    // specified the `proxy` setting. Finally, we let you override it if you
-    // really know what you're doing with a special environment variable.
+    //我们正在研究更好的解决办法，现在我们将采取行动
+    //妥协。因为我们的WDS配置只服务于“public”中的文件
+    //文件夹我们不认为访问它们是一个漏洞。然而,如果你
+    //使用“代理”功能，它变得更危险，因为它可以暴露
+    // Django和Rails等后台的远程代码执行漏洞。
+    //因此，我们将禁用主机检查正常，但启用它，如果你有
+    //指定“代理”设置。最后，我们允许您重写它
+    //真正知道如何处理一个特殊的环境变量。
     disableHostCheck:
       !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === "true",
-    // Enable gzip compression of generated files.
+    // 启用生成文件的gzip压缩。
     compress: true,
-    // Silence WebpackDevServer's own logs since they're generally not useful.
-    // It will still show compile warnings and errors with this setting.
+    // 封住WebpackDevServer自己的日志，因为它们通常没什么用。
+    //它仍然会显示编译警告和错误。
     clientLogLevel: "none",
-    // By default WebpackDevServer serves physical files from current directory
-    // in addition to all the virtual build products that it serves from memory.
-    // This is confusing because those files won’t automatically be available in
-    // production build folder unless we copy them. However, copying the whole
-    // project directory is dangerous because we may expose sensitive files.
-    // Instead, we establish a convention that only files in `public` directory
-    // get served. Our build script will copy `public` into the `build` folder.
-    // In `index.html`, you can get URL of `public` folder with %PUBLIC_URL%:
+    //默认情况下，WebpackDevServer从当前目录提供物理文件
+    //除了它从内存中提供的所有虚拟构建产品之外。
+    //这是令人困惑的，因为这些文件不会自动可用
+    //生产构建文件夹，除非我们复制它们。然而，复制整个
+    //项目目录是危险的，因为我们可能会暴露敏感文件。
+    //相反，我们建立了一个约定，即只在“public”目录中保存文件
+    //得到服务。我们的构建脚本将把“public”复制到“build”文件夹中。
+    //在“索引。html '，你可以得到' public '文件夹的URL与%PUBLIC_URL%:
     // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
-    // In JavaScript code, you can access it with `process.env.PUBLIC_URL`.
-    // Note that we only recommend to use `public` folder as an escape hatch
-    // for files like `favicon.ico`, `manifest.json`, and libraries that are
-    // for some reason broken when imported through Webpack. If you just want to
-    // use an image, put it in `src` and `import` it from JavaScript instead.
+    //在JavaScript代码中，你可以通过“process.env.PUBLIC_URL”访问它。
+    //注意，我们只建议使用“public”文件夹作为转义出口
+    //像“favicon”这样的文件。图标”、“清单。json '和库
+    //由于某些原因，在通过Webpack导入时损坏。如果你想的话
+    //使用一张图片，把它放在“src”中，然后从JavaScript“导入”它。
     contentBase: paths.appPublic,
-    // By default files from `contentBase` will not trigger a page reload.
+    //默认情况下，来自“contentBase”的文件不会触发页面重载。
     watchContentBase: true,
-    // Enable hot reloading server. It will provide /sockjs-node/ endpoint
-    // for the WebpackDevServer client so it can learn when the files were
-    // updated. The WebpackDevServer client is included as an entry point
-    // in the Webpack development configuration. Note that only changes
-    // to CSS are currently hot reloaded. JS changes will refresh the browser.
+    // 启用热重新加载服务器。它将提供/sockjs-node/ endpoint
+    //用于WebpackDevServer客户端，以便它可以了解文件的时间
+    //更新。WebpackDevServer客户端包含作为入口点
+    //在Webpack开发配置中。注意，只有更改
+    //当前正在热重载CSS。JS的变化将刷新浏览器。
     hot: true,
-    // It is important to tell WebpackDevServer to use the same "root" path
-    // as we specified in the config. In development, we always serve from /.
+    // 告诉WebpackDevServer使用相同的“根”路径是很重要的
+    //就像我们在配置中指定的那样。在开发过程中，我们始终服务于/。
     publicPath: "/",
-    // WebpackDevServer is noisy by default so we emit custom message instead
-    // by listening to the compiler events with `compiler.hooks[...].tap` calls above.
+    // WebpackDevServer在默认情况下是有噪声的，所以我们发出自定义消息
+    //通过使用“compiler.hook[…]”监听编译器事件。利用上面的电话。
     quiet: true,
-    // Reportedly, this avoids CPU overload on some systems.
+    // 据报道，这避免了某些系统的CPU过载。
     // https://github.com/facebook/create-react-app/issues/293
-    // src/node_modules is not ignored to support absolute imports
+    // src/node_modules不会被忽略，以支持绝对导入
     // https://github.com/facebook/create-react-app/issues/1065
     watchOptions: {
       ignored: ignoredFiles(paths.appSrc)
     },
-    // Enable HTTPS if the HTTPS environment variable is set to 'true'
+    // 如果HTTPS环境变量设置为“true”，则启用HTTPS
     https: protocol === "https",
     host,
     overlay: false,
     historyApiFallback: {
-      // Paths with dots should still use the history fallback.
+      // 带点的路径仍然应该使用历史回退
       // See https://github.com/facebook/create-react-app/issues/387.
       disableDotRule: true
     },
@@ -92,20 +84,20 @@ module.exports = function(proxy, allowedHost) {
     proxy,
     before(app, server) {
       if (fs.existsSync(paths.proxySetup)) {
-        // This registers user provided middleware for proxy reasons
+        // 由于代理原因，此注册用户提供的中间件
         require(paths.proxySetup)(app);
       }
 
-      // This lets us fetch source contents from webpack for the error overlay
+      // 这允许我们从webpack获取源内容以覆盖错误
       app.use(evalSourceMapMiddleware(server));
-      // This lets us open files from the runtime error overlay.
+      //这允许我们从运行时错误覆盖打开文件。
       app.use(errorOverlayMiddleware());
 
-      // This service worker file is effectively a 'no-op' that will reset any
-      // previous service worker registered for the same host:port combination.
-      // We do this in development to avoid hitting the production cache if
-      // it used the same host and port.
-      // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
+      // 这个服务工作者文件实际上是一个“no-op”，它将重置任何
+      //以前的服务工作者注册了相同的主机:端口组合。
+      //我们在开发过程中这样做是为了避免碰到生产缓存
+      //它使用相同的主机和端口。
+      // https://github.com/facebook/create-react-app/issues/2272 # issuecomment - 302832432
       app.use(noopServiceWorkerMiddleware());
     }
   };
