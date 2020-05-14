@@ -1,18 +1,10 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-// @remove-on-eject-end
 "use strict";
 
 const path = require("path");
 const fs = require("fs");
 const url = require("url");
 
-// Make sure any symlinks in the project folder are resolved:
+//确保项目文件夹中的符号链接已解析:
 // https://github.com/facebook/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
@@ -33,12 +25,12 @@ function ensureSlash(inputPath, needsSlash) {
 const getPublicUrl = appPackageJson =>
   envPublicUrl || require(appPackageJson).homepage;
 
-// We use `PUBLIC_URL` environment variable or "homepage" field to infer
-// "public path" at which the app is served.
-// Webpack needs to know it to put the right <script> hrefs into HTML even in
-// single-page apps that may serve index.html for nested URLs like /todos/42.
-// We can't use a relative path in HTML because we don't want to load something
-// like /todos/42/static/js/bundle.7289d.js. We have to know the root.
+// 我们使用“PUBLIC_URL”环境变量或“主页”字段来推断
+//“公共路径”，应用程序在其中服务。
+// Webpack需要知道如何将正确的<script> href放到HTML中
+//单页应用程序可以为嵌套url提供index.html，比如/todos/42。
+//我们不能在HTML中使用相对路径，因为我们不想加载一些东西
+//喜欢/行动计划/ 42 /静态/ js / bundle.7289d.js。我们要知道根。
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson);
   const servedUrl =
@@ -60,7 +52,7 @@ const moduleFileExtensions = [
   "jsx"
 ];
 
-// Resolve file paths in the same order as webpack
+// 按与webpack相同的顺序解析文件路径
 const resolveModule = (resolveFn, filePath) => {
   const extension = moduleFileExtensions.find(extension =>
     fs.existsSync(resolveFn(`${filePath}.${extension}`))
