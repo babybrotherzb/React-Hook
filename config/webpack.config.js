@@ -26,6 +26,7 @@ const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
 const eslint = require("eslint");
+const consts = require("./const");
 // @remove-on-eject-begin
 const getCacheIdentifier = require("react-dev-utils/getCacheIdentifier");
 // @remove-on-eject-end
@@ -59,7 +60,11 @@ module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === "development";
   const isEnvProduction =
     webpackEnv === "production" || webpackEnv === "release";
+  console.log(paths.appBuild, "00000000000000000000000000000000");
 
+  //多环境变量出口文件路径
+  paths.appBuild = paths.appBuild + "/" + webpackEnv;
+  console.log(paths.appBuild, "1111111111111111111111111111111111");
   // 用于在生产环境中启用分析的变量
   // 传入别名对象。如果传递到构建命令，则使用标志
   const isEnvProductionProfile =
@@ -68,8 +73,9 @@ module.exports = function(webpackEnv) {
   // Webpack使用“publicPath”来确定应用程序的服务来源.
   // 它需要一个结尾的斜杠，否则文件资产将得到一个不正确的路径.
   // 在发展中，我们始终从根本上服务。这使配置更容易。
+  // 下面演示cdn上传动态生成html内的路径
   const publicPath = isEnvProduction
-    ? paths.servedPath
+    ? consts["domain"][webpackEnv] + consts["projectName"]
     : isEnvDevelopment && "/";
   // 有些应用程序不使用带有pushState的客户端路由。
   // 对于这些，“主页”可以设置为“。”来启用相关的资产路径。
@@ -608,7 +614,8 @@ module.exports = function(webpackEnv) {
           {},
           {
             inject: true,
-            template: paths.appHtml
+            template: paths.appHtml,
+            filename: "index.html"
           },
           isEnvProduction
             ? {
