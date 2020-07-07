@@ -46,7 +46,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // 生成配置
 // const config = configFactory( 'production' );
-let config = configFactory("production");
+let config = {};
 
 const { checkBrowsers } = require("react-dev-utils/browsersHelper");
 
