@@ -170,7 +170,7 @@ module.exports = function(webpackEnv) {
       //改变JS代码仍然会触发刷新。
     ].filter(Boolean),
     output: {
-      // 出口建立文件夹
+      // 出口建立文件夹,正式或测试时生成打包文件，否则只编译
       path: isEnvProduction ? paths.appBuild : undefined,
       // 将/* filename */注释添加到输出中生成的require()s。
       pathinfo: isEnvDevelopment,
