@@ -34,10 +34,10 @@ const App = () => {
         <p>
           掘金地址：
           <a
-            href="https://juejin.im/user/5d90295cf265da5b5c08f32d/posts"
+            href="https://juejin.im/post/5f059b63f265da22d26b8aa1"
             target="_blank"
           >
-            https://juejin.im/user/5d90295cf265da5b5c08f32d/posts
+            https://juejin.im/post/5f059b63f265da22d26b8aa1
           </a>
         </p>
       </div>
