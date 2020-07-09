@@ -28,8 +28,8 @@ module.exports = {
   ],
   qiniu: {
     // 七牛上传地址
-    release: "http://up.qiniup.com",
-    production: "https://upload.qbox.me"
+    release: "http://qiniup.com",
+    production: "https://upload.com"
   },
   domain: {
     // 服务器地址

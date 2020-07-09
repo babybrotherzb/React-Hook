@@ -26,6 +26,8 @@ const FileSizeReporter = require("react-dev-utils/FileSizeReporter");
 const printBuildError = require("react-dev-utils/printBuildError");
 const inquirer = require("inquirer");
 const Const = require("../config/const");
+const colors = require("colors");
+const glob = require("glob");
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -44,7 +46,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-// 生成配置
+// 调用webpack传环境变量
 // const config = configFactory( 'production' );
 let config = {};
 
@@ -154,9 +156,64 @@ const brfore = async () => {
       }
       process.exit(1);
     });
+  //模拟上传操作
+  //************上传操作可以在这里写************* */
+  await startUploadImage(env, "token", "qiniu");
+  await startUpload(env, "token", "qiniu");
+  //************上传操作可以在这里写************* */
 };
 
 brfore();
+
+/**
+ * @desc 上传静态js/css资源
+ * @param {string} env 环境变量
+ * @param {string} token
+ *
+ */
+async function startUpload(env, token, qiniu) {
+  const files = glob.sync(`${paths.appBuild}/static/{js,css}/**/*.{js,css}`);
+
+  if (files.length === 0) throw new Error("请先build环境静态资源");
+
+  for (let filepath of files) {
+    const fileExtension = filepath.substring(filepath.lastIndexOf(".") + 1);
+
+    // 文件上传
+    console.log(colors.underline(filepath));
+    console.log(
+      colors.magenta(
+        `${Const["domain"][env] +
+          "static/" +
+          fileExtension +
+          "/" +
+          path.basename(filepath)}`
+      )
+    );
+  }
+}
+
+/**
+ * @desc 上传静态图片资源
+ * @param {string} env
+ * @param {string} token
+ *
+ */
+async function startUploadImage(env, token, qiniu) {
+  const files = glob.sync(
+    `${paths.appBuild}/static/media/**/*.{png,jpg,gif,jpeg,svg}`
+  );
+
+  for (let filepath of files) {
+    // 文件上传
+    console.log(colors.underline(filepath));
+    console.log(
+      colors.magenta(
+        `${Const["domain"][env] + "static/media/" + path.basename(filepath)}`
+      )
+    );
+  }
+}
 
 //开始打包
 async function build(previousFileSizes) {
