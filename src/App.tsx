@@ -28,7 +28,16 @@ const App = () => {
         <p>
           博客地址：
           <a href="https://blog.csdn.net/weixin_43648947" target="_blank">
-            https://blog.csdn.net/weixin_43648947
+            https://juejin.im/post/5f059b63f265da22d26b8aa1
+          </a>
+        </p>
+        <p>
+          掘金地址：
+          <a
+            href="https://juejin.im/user/5d90295cf265da5b5c08f32d/posts"
+            target="_blank"
+          >
+            https://juejin.im/user/5d90295cf265da5b5c08f32d/posts
           </a>
         </p>
       </div>
